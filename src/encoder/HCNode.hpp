@@ -40,7 +40,17 @@ ostream& operator<<(ostream& stm, const HCNode& n) {
  * has higher prioruty.
  */
 struct HCNodePtrComp {
-    /* TODO */
-    bool operator()(HCNode*& lhs, HCNode*& rhs) const { return false; }
+    
+    bool operator()(HCNode*& lhs, HCNode*& rhs) const { 
+    
+        //if the count is the same we have to get the higher ascii value
+        if( lhs->count == rhs->count ) {
+            return lhs->symbol < rhs->symbol;
+        }
+
+        //the one with the lower count has a higher priority
+        return rhs->count < lhs->count;    
+    
+    }
 };
 #endif  // HCNODE_HPP

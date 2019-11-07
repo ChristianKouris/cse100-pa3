@@ -9,6 +9,7 @@
 #include <fstream>
 #include <queue>
 #include <vector>
+#include <algorithm>
 #include "BitInputStream.hpp"
 #include "BitOutputStream.hpp"
 #include "HCNode.hpp"
@@ -21,9 +22,17 @@ class HCTree {
     HCNode* root;            // the root of HCTree
     vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
 
+    /* TODO: add function header */
+    void deleteNodes( HCNode * n );
+
   public:
     /* TODO: add function header and implement */
-    HCTree() {}
+    HCTree() {
+
+        root = 0;
+        leaves =  std::vector<HCNode*>();
+
+    }
 
     /* TODO: add function header */
     ~HCTree();
