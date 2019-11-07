@@ -20,7 +20,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
     //weed out the 0 freq chars, add the chars to a node in vector leaves
     for( unsigned int i = 0; i < freqs.size(); i++ ) {
         if( freqs[i] != 0 ) {
-            unsigned char ch = i;
+            byte ch = i;
             HCNode * validNode = new HCNode( freqs[i], ch );
             leaves.push_back( validNode );
         }
@@ -56,15 +56,67 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 /* TODO */
 void HCTree::encode(byte symbol, BitOutputStream& out) const {}
 
-/* TODO */
-void HCTree::encode(byte symbol, ostream& out) const {}
+/* Add function header from hpp file */
+void HCTree::encode(byte symbol, ostream& out) const {
+
+    //search through the leaves and find the node for our symbol
+    HCNode * curNode = nullptr;
+    for( unsigned int i = 0; i < leaves.size(); i++ ) {
+        if( leaves[i]->symbol == symbol ) {
+            curNode = leaves[i];
+            break;
+        }
+    }
+    
+    string encSymb = "";
+    //go up the tree to get the message
+    while( curNode != root ) {
+        
+        //check to see if we are a 0 or 1 child
+        char curBit = '0';
+        if( curNode == curNode->p->c1 ) {
+            curBit = '1';
+        }
+        
+        encSymb = curBit + encSymb;
+        curNode = curNode->p;
+
+    }
+
+    //write the string to the ostream
+    out << encSymb;
+
+}
 
 /* TODO */
 byte HCTree::decode(BitInputStream& in) const { return ' '; }
 
-/* TODO */
-byte HCTree::decode(istream& in) const { return ' '; }
+/* Add function header from hpp file */
+byte HCTree::decode(istream& in) const {
+    
+    //start at the root node
+    HCNode * curNode = root;
 
+    //go down the tree reading each char until we reach a leaf
+    while( curNode->c0 != 0 && curNode->c1 != 0 ) {
+
+        if( in.get() == '1' ) {
+
+            curNode = curNode->c1;
+
+        } else {
+
+            curNode = curNode->c0;
+
+        }
+
+    }
+
+    return curNode->symbol; 
+
+}
+
+/* Add function header from hpp file */
 void HCTree::deleteNodes( HCNode * n ) {
 
     if( n == nullptr ) { return; }
