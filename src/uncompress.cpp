@@ -1,7 +1,9 @@
 /**
  * TODO: file header
  *
- * Author:
+ * Author: Chrisitan Kouris
+ * Sources: cplusplus reference isream/ostream/ifstream/ofstream, std::vector,
+ *          std::stoul
  */
 #include <fstream>
 #include <iostream>

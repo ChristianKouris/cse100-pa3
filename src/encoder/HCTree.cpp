@@ -1,7 +1,12 @@
 /**
- * TODO: file header
+ * This cpp file takes all of the methods defined in the hpp file and 
+ * writes implementation for it. The build method takes in a vector of
+ * frequencies and builds a corresponding tree. the encode and decode
+ * methods each have two different signatures depending on if we want to 
+ * use a normal i/ostream or a biti/ostream.
  *
- * Author:
+ * Author: Christian Kouris
+ * Email: ckouris@ucsd.edu
  * Sources: Stepik Chapter 7.3 tree build visualization,
  *          cplusplus reference for: std::vector, std::sort, ostream, istream
  */

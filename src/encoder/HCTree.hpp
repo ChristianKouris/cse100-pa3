@@ -1,7 +1,14 @@
 /**
- * TODO: file header
+ * This hpp file defines all of the method headers for the HCTree. The HCTree
+ * object itself is empty until the build command is called, none of the other
+ * methods can be called without build being called first. The other four
+ * methods involve using the HCTree to encode and decode characters in 
+ * a file.
  *
- * Author:
+ * Author: Christian Kouris
+ * Email: ckouris@ucsd.edu
+ * Sources: Stepik Chapter 7.3 tree build visualization,
+ *          cplusplus reference for: std::vector, std::sort, ostream, istream
  */
 #ifndef HCTREE_HPP
 #define HCTREE_HPP
@@ -16,7 +23,10 @@
 
 using namespace std;
 
-/** TODO: class header */
+/** The purpose of the HCTree is to encode text files in order to compress 
+ *  them. Each HCTree holds a vector of each leaf which represents an encoded 
+ *  character.
+ */
 class HCTree {
   private:
     HCNode* root;            // the root of HCTree

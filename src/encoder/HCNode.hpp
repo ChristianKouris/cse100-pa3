@@ -1,7 +1,13 @@
 /**
- * TODO: file header
+ * This file defines the HC Node which is used to build a Huffman Coding Tree. 
+ * Each node with path either to a 1 bit or a 0 bit and will hold it's parent;
+ * if it is a leaf it will also hold it's frequency count as well as the 
+ * character that the code represents. This file also has a comparator tp make
+ * sure that the higher frequency characters are represented by less bits.
  *
- * Author:
+ * Author: Christian Kouris
+ * Email: ckouris@ucsd.edu
+ * Sources: pa3 writeup
  */
 #ifndef HCNODE_HPP
 #define HCNODE_HPP

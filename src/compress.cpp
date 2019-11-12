@@ -2,7 +2,8 @@
  * TODO: file header
  *
  * Author:
- * Sources: 
+ * Sources: cplusplus reference isream/ostream/ifstream/ofstream, std::vector,
+ *          
  */
 #include <fstream>
 #include <iostream>
@@ -25,7 +26,6 @@ void pseudoCompression(string inFileName, string outFileName) {
     while( infile.get( ch ) ) {
         freqs[ch]++;
     }
-    infile.close();
     //build a HC tree using freqs
     HCTree hctree = HCTree();
     hctree.build( freqs );
