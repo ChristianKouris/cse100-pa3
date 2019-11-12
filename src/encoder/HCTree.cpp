@@ -2,7 +2,8 @@
  * TODO: file header
  *
  * Author:
- * Sources: Stepik Chapter 7.3 tree build visualization
+ * Sources: Stepik Chapter 7.3 tree build visualization,
+ *          cplusplus reference for: std::vector, std::sort, ostream, istream
  */
 #include "HCTree.hpp"
 

@@ -32,3 +32,15 @@ TEST_F(SimpleHCTreeFixture, TEST_DECODE) {
     istringstream is("1");
     ASSERT_EQ(tree.decode(is), 'b');
 }
+
+TEST_F(SimpleHCTreeFixture, TEST_LARGE_DECODE) {
+
+        vector<unsigned int> freqs1(256);
+        freqs1['a'] = 2;
+        freqs1['b'] = 3;
+        freqs1['y'] = 3;
+        tree.build(freqs1);
+        istringstream is("1");
+        ASSERT_EQ(tree.decode(is), 'b');
+
+}
