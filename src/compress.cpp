@@ -36,7 +36,7 @@ void pseudoCompression(string inFileName, string outFileName) {
     ofstream outfile( outFileName, ios::out | ios::trunc );
 
     //print the header for the array
-    for( unsigned int i = 0; i < freqs.size(); i++ ) {
+    for( unsigned int i = 0; i < 256; i++ ) {
         outfile << freqs[i] << endl;
     }
 

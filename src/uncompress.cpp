@@ -23,7 +23,7 @@ void pseudoDecompression(string inFileName, string outFileName) {
     
     //get the frequencies of each character
     vector<unsigned int> freqs = std::vector<unsigned int>(256, 0);
-    for( byte i = 0; i < freqs.size(); i++ ) {
+    for( unsigned int i = 0; i < 256; i++ ) {
 
         char charFreq[BUFSIZ];
         infile.getline( charFreq, BUFSIZ );
