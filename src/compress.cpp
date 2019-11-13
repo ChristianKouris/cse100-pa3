@@ -31,7 +31,8 @@ void pseudoCompression(string inFileName, string outFileName) {
     hctree.build( freqs );
 
     //set the infile to the beginning and open the outfile
-    infile.seekg(0);
+    infile.close();
+    infile.open( inFileName, ios::in );
     ofstream outfile( outFileName, ios::out | ios::trunc );
 
     //print the header for the array
