@@ -50,8 +50,8 @@ void HCTree::build(const vector<unsigned int>& freqs) {
         HCNode* oneNode = forest.back();
         forest.pop_back();
         //parent for both nodes has added freq, both as children, no char
-        HCNode* parentNode = new HCNode( zeroNode->count + oneNode->count, 0, 
-                                         zeroNode, oneNode );
+        HCNode* parentNode = new HCNode( zeroNode->count + oneNode->count, 
+                                         zeroNode->symbol, zeroNode, oneNode );
         //set both nodes' parent to be new node and add it to the forest
         oneNode->p = parentNode;
         zeroNode->p = parentNode;
