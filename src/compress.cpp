@@ -1,7 +1,10 @@
 /**
- * TODO: file header
+ * This file takes in an input file along with an output file as well as 
+ * arguments if necessary. The program will then use huffman encoding
+ * to compress the input file and write it to the output file.
  *
- * Author:
+ * Author: Christian Kouris
+ * Email: ckouris@ucsd.edu
  * Sources: cplusplus reference isream/ostream/ifstream/ofstream, std::vector,
  *          
  */
@@ -15,8 +18,12 @@
 
 #define NUM_ARGS 3
 
-/* TODO: add pseudo compression with ascii encoding and naive header
- * (checkpoint) */
+/* Reads all the characters from the infile and counts their frequencies. It
+ * then builds a HCTree using the frequencies and encodes the characters in 
+ * the input file and writes them to the output file.
+ * Parameter: inFileName - the name of the input file
+ * Parameter: outFileName - the name of the output file
+ */
 void pseudoCompression(string inFileName, string outFileName) {
     
     //open the infile for reading
@@ -35,7 +42,8 @@ void pseudoCompression(string inFileName, string outFileName) {
     //set the infile to the beginning and open the outfile
     infile.close();
     infile.open( inFileName, ios::in );
-    ofstream outfile( outFileName, ios::out | ios::trunc );
+    ofstream outfile;
+    outfile.open( outFileName, ios::out | ios::trunc );
 
     //print the header for the array
     for( unsigned int i = 0; i < 256; i++ ) {
@@ -44,7 +52,8 @@ void pseudoCompression(string inFileName, string outFileName) {
 
     //encode each character using the HC tree and put it in outfile
     while( infile.peek() != EOF ) {
-        hctree.encode( infile.get(), outfile );
+        char ch = infile.get();
+        hctree.encode( ch, outfile );
     }
     //close the files
     infile.close();
@@ -52,10 +61,18 @@ void pseudoCompression(string inFileName, string outFileName) {
 
 }
 
-/* TODO: True compression with bitwise i/o and small header (final) */
+/* Reads all the characters from the infile and counts their frequencies. It
+ * then builds a HCTree using the frequencies and encodes the characters in 
+ * the input file. The encoded bits are written to outfile using a bit stream.
+ * Parameter: inFileName - the name of the input file
+ * Parameter: outFileName - the name of the output file
+ */
 void trueCompression(string inFileName, string outFileName) {}
 
-/* TODO: Main program that runs the compress */
+/* The main driver for compress.cpp which uses cxxopts for arg processing.
+ * Parameter: argc - the count of all the arguments
+ * Parameter: argv - an array of all of the arguments
+ */
 int main(int argc, char* argv[]) { 
 
     //implementation given in pa3 writeup
@@ -82,7 +99,7 @@ int main(int argc, char* argv[]) {
     }
 
     //use isAsciiOutput to determine wether to use psuedo or real compression
-    if( isAsciiOutput ) {
+    if( true/*isAsciiOutput*/ ) {
         pseudoCompression( inFileName, outFileName );
     } else {
         trueCompression( inFileName, outFileName );

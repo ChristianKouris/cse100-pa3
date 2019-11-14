@@ -1,7 +1,10 @@
 /**
- * TODO: file header
+ * This file takes in an input file along with an output file as well as 
+ * arguments if necessary. The program will then use huffman encoding
+ * to uncompress the input file and write it to the output file.
  *
  * Author: Chrisitan Kouris
+ * Email: ckouris@ucsd.edu
  * Sources: cplusplus reference isream/ostream/ifstream/ofstream, std::vector,
  *          std::stoul
  */
@@ -15,7 +18,11 @@
 
 #define NUM_ARGS 3
 
-/* TODO: Pseudo decompression with ascii encoding and naive header (checkpoint)
+/* This program reads the header that was included in the encrypted 
+ * input file and builds an HCTree off of them. The HCTree is then used to
+ * decode the infile and write the original chars to the outfile.
+ * Parameter: inFileName - the name of the input file
+ * Parameter: outFileName - the name of the output file
  */
 void pseudoDecompression(string inFileName, string outFileName) {
 
@@ -50,10 +57,18 @@ void pseudoDecompression(string inFileName, string outFileName) {
 
 }
 
-/* TODO: True decompression with bitwise i/o and small header (final) */
+/* This program reads the header that was included in the encrypted input
+ * file and builds an HCTree off of them. The HCTree is then used to decode
+ * the bits from the infile and write the original chars to the outfile.
+ * Parameter: inFileName - the name of the input file
+ * Parameter: outFileName - the name of the output file
+ */
 void trueDecompression(string inFileName, string outFileName) {}
 
-/* TODO: Main program that runs the uncompress */
+/* The main driver for uncompress.cpp which uses cxxopts for arg processing.
+ * Parameter: argc - the count of all the arguments
+ * Parameter: argv - an array of all of the arguments
+ */
 int main(int argc, char* argv[]) { 
     
     //implementation given in pa3 writeup
@@ -80,7 +95,7 @@ int main(int argc, char* argv[]) {
     }
 
     //use isAsciiOutput to determine wether to use psuedo or real compression
-    if( isAsciiOutput ) {
+    if( true/*isAsciiOutput*/ ) {
         pseudoDecompression( inFileName, outFileName );
     } else {
         trueDecompression( inFileName, outFileName );
