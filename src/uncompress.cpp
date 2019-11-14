@@ -11,6 +11,7 @@
 #include "FileUtils.hpp"
 #include "HCNode.hpp"
 #include "HCTree.hpp"
+#include "cxxopts.hpp"
 
 #define NUM_ARGS 3
 
@@ -19,7 +20,8 @@
 void pseudoDecompression(string inFileName, string outFileName) {
 
     //open the infile for reading and the outfile for writing
-    ifstream infile( inFileName, ios::in );
+    ifstream infile;
+    infile.open( inFileName, ios::in );
     
     //get the frequencies of each character
     vector<unsigned int> freqs = std::vector<unsigned int>(256, 0);
@@ -38,7 +40,7 @@ void pseudoDecompression(string inFileName, string outFileName) {
 
     //decode each character using the HC tree and put it in outfile
     ofstream outfile( outFileName, ios::out | ios::trunc );
-    while( !infile.eof() ) {
+    while( infile.peek() != EOF ) {
         outfile << hctree.decode( infile );
     }
 
@@ -54,17 +56,36 @@ void trueDecompression(string inFileName, string outFileName) {}
 /* TODO: Main program that runs the uncompress */
 int main(int argc, char* argv[]) { 
     
-    //first check to see if there are only 2 arguments
-    if( argc != NUM_ARGS ) {
-        return 0;
+    //implementation given in pa3 writeup
+    cxxopts::Options options("./uncompress",
+                             "Decompresses files using Huffman Encoding");
+    options.positional_help("./path_to_input_file ./path_to_output_file");
+ 
+    bool isAsciiOutput = false;
+    string inFileName, outFileName;
+    options.allow_unrecognised_options().add_options()(
+        "ascii", "Take input in ascii mode instead of bit stream",
+        cxxopts::value<bool>(isAsciiOutput))(
+        "input", "", cxxopts::value<string>(inFileName))(
+        "output", "", cxxopts::value<string>(outFileName))(
+        "h,help", "Print help and exit");
+ 
+    options.parse_positional({"input", "output"});
+    auto userOptions = options.parse(argc, argv);
+ 
+    if (userOptions.count("help") || !FileUtils::isValidFile(inFileName) ||
+        outFileName.empty()) {
+        cout << options.help({""}) << std::endl;
+        exit(0);
     }
 
-    //check to see if input file is valid or empty
-    if( !FileUtils::isValidFile(argv[1]) || FileUtils::isEmptyFile(argv[1]) ) {
-        return 0;
+    //use isAsciiOutput to determine wether to use psuedo or real compression
+    if( isAsciiOutput ) {
+        pseudoDecompression( inFileName, outFileName );
+    } else {
+        trueDecompression( inFileName, outFileName );
     }
-    
-    //call the pseudoCompression method
-    pseudoDecompression( argv[1], argv[2] );
+
+    return 0;
 
 }
