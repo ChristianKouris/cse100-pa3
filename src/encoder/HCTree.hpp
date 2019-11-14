@@ -32,11 +32,18 @@ class HCTree {
     HCNode* root;            // the root of HCTree
     vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
 
-    /* TODO: add function header */
+    /* Helper function for the class destrucctor which recursively deletes the
+     * Nodes in the HCTree.
+     * Parameter: n - The current HCNode in the recursion.
+     */
     void deleteNodes( HCNode * n );
 
   public:
-    /* TODO: add function header and implement */
+    /* The default constructor for the HCTree which sets root to 0 and
+     * sets leaves to an empty vector of HCNode pointers. There are no
+     * input parameters for the constructor since the build method is
+     * how each HCTree is individually built. 
+     */
     HCTree() {
 
         root = 0;
@@ -44,22 +51,48 @@ class HCTree {
 
     }
 
-    /* TODO: add function header */
+    /* The destructor for the HCTree. */
     ~HCTree();
 
-    /* TODO: add function header */
+    /* Takes in a vector of frequencies for each character in ASCII and 
+     * creates an HCTree based on them. The higher the frequency, the lower
+     * number of bits each character represents. Each actual character is a
+     * leaf in the tree rather than a node.
+     * Parameter: freqs - the frequencies of each ASCII character for the Tree
+     */
     void build(const vector<unsigned int>& freqs);
 
-    /* TODO: add function header */
+    /* This method takes in an already build HCTree and encodes
+     * a single ASCII character to an output stream. The difference between
+     * this signature and the other signature is that this encode writes to 
+     * a BitOutputStream instead of just an ostream.
+     * Parameter: symbol - the single byte that we are encoding
+     * Parameter: out - the output stream we are writing single bits to
+     */
     void encode(byte symbol, BitOutputStream& out) const;
 
-    /* TODO: add function header */
+    /* This method takes in an already build HCTree and encodes
+     * a single ASCII character to an output stream. The difference between
+     * this signature and the other signature is that this encode writes chars
+     * to an ostream instead of bits to a BitOutputStream.
+     * Parameter: symbol - the single byte that we are encoding
+     * Parameter: out - the output stream we are writing characters to
+     */
     void encode(byte symbol, ostream& out) const;
 
-    /* TODO: add function header */
+    /* This method uses an already build HCTree and decodes a single ASCII
+     * charcter from an input stream and returns it. This version of the 
+     * decode uses a BitInputStream instead of an istream in order to read
+     * bits instead of chars.
+     * Parameter: in - the BitInputStream we are reading bits from.
+     */
     byte decode(BitInputStream& in) const;
 
-    /* TODO: add function header */
+    /* This method uses an already build HCTree and decodes a single ASCII
+     * charcter from an input stream and returns it. This version of the 
+     * decode uses a istream so it reads chars instead of bits.
+     * Parameter: in - the istream we are reading chars from.
+     */
     byte decode(istream& in) const;
 };
 
