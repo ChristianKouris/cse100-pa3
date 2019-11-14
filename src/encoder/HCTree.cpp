@@ -60,7 +60,9 @@ void HCTree::build(const vector<unsigned int>& freqs) {
     }
 
     //set the root to be the last pointer of forest
-    root = forest[0];
+    if( forest.size() > 0 ) {
+        root = forest[0];
+    }
 
 }
 
