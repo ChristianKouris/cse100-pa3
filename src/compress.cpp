@@ -16,8 +16,6 @@
 #include "HCTree.hpp"
 #include "cxxopts.hpp"
 
-#define NUM_ARGS 3
-
 /* Reads all the characters from the infile and counts their frequencies. It
  * then builds a HCTree using the frequencies and encodes the characters in 
  * the input file and writes them to the output file.
@@ -67,7 +65,47 @@ void pseudoCompression(string inFileName, string outFileName) {
  * Parameter: inFileName - the name of the input file
  * Parameter: outFileName - the name of the output file
  */
-void trueCompression(string inFileName, string outFileName) {}
+void trueCompression(string inFileName, string outFileName) {
+
+    //open the infile for reading
+    ifstream infile;
+    infile.open( inFileName, ios::in );
+    //get the frequencies of each character
+    vector<unsigned int> freqs = std::vector<unsigned int>(256, 0);
+    char ch;
+    while( infile.get( ch ) ) {
+        freqs[ch]++;
+    }
+    //build a HC tree using freqs
+    HCTree hctree = HCTree();
+    hctree.build( freqs );
+
+    //set the infile to the beginning and open the outfile
+    infile.close();
+    infile.open( inFileName, ios::in );
+    ofstream outfile;
+    outfile.open( outFileName, ios::out | ios::trunc );
+
+    //print the header for the array
+    for( unsigned int i = 0; i < 256; i++ ) {
+        outfile << freqs[i] << endl;
+    }
+
+    //create a bit input stream for infile and outfile
+    BitOutputStream bOutfile = BitOutputStream( outfile );
+
+    //encode each character using the HC tree and put it in bit outputStream
+    while( infile.peek() != EOF ) {
+
+        char ch = infile.get();
+        hctree.encode( ch, bOutfile );
+
+    }
+    //close the files
+    infile.close();
+    outfile.close();
+
+}
 
 /* The main driver for compress.cpp which uses cxxopts for arg processing.
  * Parameter: argc - the count of all the arguments
@@ -99,7 +137,7 @@ int main(int argc, char* argv[]) {
     }
 
     //use isAsciiOutput to determine wether to use psuedo or real compression
-    if( true/*isAsciiOutput*/ ) {
+    if( isAsciiOutput ) {
         pseudoCompression( inFileName, outFileName );
     } else {
         trueCompression( inFileName, outFileName );

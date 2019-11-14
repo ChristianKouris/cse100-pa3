@@ -16,8 +16,6 @@
 #include "HCTree.hpp"
 #include "cxxopts.hpp"
 
-#define NUM_ARGS 3
-
 /* This program reads the header that was included in the encrypted 
  * input file and builds an HCTree off of them. The HCTree is then used to
  * decode the infile and write the original chars to the outfile.
@@ -63,7 +61,41 @@ void pseudoDecompression(string inFileName, string outFileName) {
  * Parameter: inFileName - the name of the input file
  * Parameter: outFileName - the name of the output file
  */
-void trueDecompression(string inFileName, string outFileName) {}
+void trueDecompression(string inFileName, string outFileName) {
+
+    //open the infile for reading and the outfile for writing
+    ifstream infile;
+    infile.open( inFileName, ios::in );
+    
+    //get the frequencies of each character
+    vector<unsigned int> freqs = std::vector<unsigned int>(256, 0);
+    for( unsigned int i = 0; i < 256; i++ ) {
+
+        char charFreq[BUFSIZ];
+        infile.getline( charFreq, BUFSIZ );
+        unsigned int fr = std::stoul( charFreq );
+        freqs[i] = fr;
+
+    }
+
+    //build a HC tree using freqs
+    HCTree hctree = HCTree();
+    hctree.build( freqs );
+
+    //create a bit input stream for infile
+    BitInputStream bInfile = BitInputStream( infile );
+
+    //decode each character using the HC tree and put it in outfile
+    ofstream outfile( outFileName, ios::out | ios::trunc );
+    while( infile.peek() != EOF ) {
+        outfile << hctree.decode( bInfile );
+    }
+
+    //close the files
+    infile.close();
+    outfile.close();
+
+}
 
 /* The main driver for uncompress.cpp which uses cxxopts for arg processing.
  * Parameter: argc - the count of all the arguments
@@ -95,7 +127,7 @@ int main(int argc, char* argv[]) {
     }
 
     //use isAsciiOutput to determine wether to use psuedo or real compression
-    if( true/*isAsciiOutput*/ ) {
+    if( isAsciiOutput ) {
         pseudoDecompression( inFileName, outFileName );
     } else {
         trueDecompression( inFileName, outFileName );
