@@ -59,6 +59,11 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
+    //check to see if input file is valid or empty
+    if( !FileUtils::isValidFile(argv[1]) || FileUtils::isEmptyFile(argv[1]) ) {
+        return 0;
+    }
+    
     //call the pseudoCompression method
     pseudoDecompression( argv[1], argv[2] );
 
