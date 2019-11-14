@@ -7,7 +7,6 @@
  * Email: ckouris@ucsd.edu
  * Sources: Week 6 Discussion, istream, c++ operators doc
  */
-#include "BitInputStream.hpp"
 #ifndef BITINPUTSTREAM_HPP
 #define BITINPUTSTREAM_HPP
 

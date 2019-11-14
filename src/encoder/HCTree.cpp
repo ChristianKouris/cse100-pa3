@@ -91,15 +91,15 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {
             curBit = 1;
         }
         
-        encSymb = (encSymb << 1) | curbit;
+        encSymb = (encSymb << 1) | curBit;
         nbits++;
         curNode = curNode->p;
     
     }
 
-    for( unsigned int i = nbits-1; i >= 0; i-- ) {
+    for( unsigned int i = nbits; i > 0; i-- ) {
 
-        out.writeBit( (encSymb >> i) & 1 )
+        out.writeBit( (encSymb >> (i-1)) & 1 );
     
     }
 
